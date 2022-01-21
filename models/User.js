@@ -22,21 +22,21 @@ const userSchema = new mongoose.Schema({
 
   //hashing the password befor saving
   userSchema.pre('save', async function(next) {
-    const salt = await bcrypt.genSalt();
+    const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
     next();
   });
 
-  userSchema.statics.login = async function(username, password) {
-    const user = await this.findOne({ username });
+  userSchema.statics.login = async function(email, password) {
+    const user = await this.findOne({ email });
     if (user) {
       const auth = await bcrypt.compare(password, user.password);
       if (auth) {
         return user;
       }
-      throw Error('username or password is wrong');
+      throw Error('email or password is wrong');
     }
-    throw Error('username or password is wrong');
+    throw Error('email or password is wrong');
   };
   
   const User = mongoose.model('user', userSchema);

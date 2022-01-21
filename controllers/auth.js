@@ -17,9 +17,9 @@ const checkEmailError = (error)=>{
     }
     return errorMessage;
 }
-const checkUsernameErr = (err)=>{
+const checkUsernameErr = (error)=>{
     let errorMessage = "";
-    if(error.message.includes("username") &&err.code === 11000){
+    if(error.message.includes("username") && error.code === 11000){
         errorMessage = "This username is already exists";
     }
     return errorMessage;
@@ -36,11 +36,12 @@ const checkPassError = (error)=>{
 
 module.exports.signup_post = async(req , res) =>{
     try {
-        const user = await  User.create({username: req.body.username, email:req.body.email, password: req.body.password });     
+        const { username, email, password } = req.body;
+        const user = await  User.create({username, email, password });     
         const token = createToken(user._id);
 
        
-        res.status(201).json({ username: req.body.username, token });
+        res.status(201).json({ username, token });
     } catch (err) {
         console.log(err.message)
         let error = {passwordError:checkPassError(err.message), emailError: checkEmailError(err), usernameError:checkUsernameErr(err)};
