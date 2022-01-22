@@ -1,9 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 
-function Info({user, setUser}) {
+function Info({user, setUser, preChat, setpreChat, setShowChatPage}) {
     const [username, setUsername] = useState("");
-    //const [user, setUser] = useState("");
     const searchHandler = async (e) => {
         e.preventDefault();
         const config = {
@@ -19,6 +18,8 @@ function Info({user, setUser}) {
               }, config
             );
             setUser(data.username);
+            setpreChat(data.preChat);
+            setShowChatPage(true);
           } catch (error) {
            
           }

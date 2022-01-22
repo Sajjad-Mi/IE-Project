@@ -29,7 +29,7 @@ code {
 
 }
 .search-user{
-  border: 2px solid #c5c5c5;
+  border: 2px solid #fcde67;
   margin: 5px 0;
   border-radius: 4px;
 }
@@ -50,6 +50,31 @@ code {
   height: 800px;
   float: right;
   border-radius: 5px;
-
+  position: relative;
   background-color: #272626;
+}
+.chat-header{
+  margin: 10px auto;
+  width: 95%;
+  height: 80px;
+  border-radius: 5px;
+  background-color: #2e2e2e;
+}
+.chat{
+  margin: 15px auto;
+  width: 95%;
+  height: 580px;
+  border-radius: 5px;
+  background-color: #2e2e2e;
+}
+.chat-input{
+  position: absolute;  
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  margin: 10px auto;
+  width: 95%;
+  height: 80px;
+  border-radius: 5px;
+  background-color: #2e2e2e;
 }
