@@ -6,6 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #fcde67;
+  color: white;
 }
 
 code {
@@ -14,6 +15,41 @@ code {
 }
 
 .app{
-  max-width: 800px;
-  margin: auto;
+  max-width: 1200px;
+  margin: 30px auto;
+}
+
+.info{
+  padding: 5px;
+  width: 28%;
+  height: 800px;
+  float: left;
+  background-color: #272626;
+  border-radius: 5px;
+
+}
+.search-user{
+  border: 2px solid #c5c5c5;
+  margin: 5px 0;
+  border-radius: 4px;
+}
+.search-user input{
+  padding: 15px 15px;
+  text-align: center;
+  width: 68%;
+  margin: 5px 0;
+  border-radius: 4px;
+}
+.search-user button{
+  width: 18%;
+  padding: 15px 15px;
+  margin-left: 10px;
+}
+.chatroom{
+  width: 68%;
+  height: 800px;
+  float: right;
+  border-radius: 5px;
+
+  background-color: #272626;
 }

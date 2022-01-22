@@ -4,7 +4,7 @@ const {checkUser} = require('../middleware/auth.js')
 
 const router = Router();
 
-router.post("/userinfo", checkUser, privateControllers.userinfo_post);
+router.post("/finduser", checkUser, privateControllers.finduser_post);
 
 
 
