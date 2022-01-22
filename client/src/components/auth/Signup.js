@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-function Signup({history}) {
+function Signup() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate()
+
+    //check if user logged in navigate user to home page
+    useEffect(() => {
+      if (localStorage.getItem("authToken")) {
+          navigate("/");
+      }
+    }, []);
 
     const signupHandler = async (e) => {
         e.preventDefault();
@@ -23,7 +32,7 @@ function Signup({history}) {
       
             localStorage.setItem("authToken", data.token);
       
-            history.push("/");
+            navigate("/");
           } catch (error) {
            
           }
