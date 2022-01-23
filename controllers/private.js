@@ -5,15 +5,18 @@ module.exports.finduser_post = async (req , res) =>{
     try {
         const user = await User.findOne({username:req.body.username});
         console.log(user);
-        const preChat=false;
+        let preChat=false;
+        let chatid;
         user.chatsId.forEach(chatId=>{
-            if(chatId.username === req.user.username){
+            if(chatId.name === req.user.username){
+                
                 preChat=true;
+                chatid=chatId._id;
             }
         })
-        res.status(201).json({ username: user.username,  });
+        res.status(201).json({ username: user.username,  preChat, chatid});
     } catch (err) {
-        console.log(err.message)
+        console.log(err)
        
     }
 }

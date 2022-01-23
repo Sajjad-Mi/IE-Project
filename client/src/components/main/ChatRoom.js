@@ -1,18 +1,33 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import io from "socket.io-client";
+const socket = io({
+  auth: {
+    token: localStorage.getItem("authToken")
+  }
+});
 
-function ChatRoom({user, setUser, preChat, setpreChat}) {
+function ChatRoom({roomId, user, setUser, preChat, setpreChat}) {
     const [text, setText] = useState("");
+  
+    useEffect(()=>{
+        socket.emit('joinRoom', {roomId});
+        socket.on('message', (data)=>{
+          console.log(data)
+        })
+    }, [])
     const config = {
         headers: {
           "Content-Type": "application/json",
           authorization: `Bearer ${localStorage.getItem("authToken")}`
         },
     };
-  
+
     const sendMessage=()=>{
         console.log(text)
+        socket.emit('newMessage', text);
     }
+  
     
     const startChat= async ()=>{
         try {
@@ -34,7 +49,12 @@ function ChatRoom({user, setUser, preChat, setpreChat}) {
 
             </div>
             <div className="chat">
-
+                <div className="message">
+                  <p>text</p>
+                </div>
+                <div className="message">
+                  <p>text</p>
+                </div>
             </div>
 
             {preChat ? <div className="chat-input">

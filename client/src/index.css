@@ -78,3 +78,11 @@ code {
   border-radius: 5px;
   background-color: #2e2e2e;
 }
+.chat .message{
+  margin: 5px 5px;
+  height: 25px;
+  width: 80px;
+  border-radius: 25px;
+  background-color: #1f1e1e;
+  text-align: center;
+}

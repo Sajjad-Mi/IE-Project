@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-function Info({user, setUser, preChat, setpreChat, setShowChatPage}) {
+function Info({user, setRoomId, setUser, preChat, setpreChat, setShowChatPage}) {
     const [username, setUsername] = useState("");
     const searchHandler = async (e) => {
         e.preventDefault();
@@ -19,6 +19,9 @@ function Info({user, setUser, preChat, setpreChat, setShowChatPage}) {
             );
             setUser(data.username);
             setpreChat(data.preChat);
+            if(data.preChat){
+                setRoomId(data.chatid);
+            }
             setShowChatPage(true);
           } catch (error) {
            
