@@ -7,25 +7,45 @@ const socket = io({
   }
 });
 
-function ChatRoom({roomId, user, setUser, preChat, setpreChat}) {
+function ChatRoom({username, roomId, user, setUser, preChat, setpreChat}) {
     const [text, setText] = useState("");
-  
-    useEffect(()=>{
+    const [messages, setMessages] = useState([]);
+    let messagesList;
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("authToken")}`
+      },
+  };
+    useEffect(async()=>{
+      console.log("hi"+preChat)
+
+      if(preChat){
+        try {
+          const { data } = await axios.get(`/messages/${roomId}`, config
+          );
+          console.log(data)
+          messagesList=data.messages;
+          setMessages(messagesList);
+        } catch (error) {
+          console.log(error)
+        }
+      }
         socket.emit('joinRoom', {roomId});
         socket.on('message', (data)=>{
           console.log(data)
+          const newMsg=[{text:data, user:username}]
+          setMessages(messagesList=>[...messagesList, ...newMsg])
         })
     }, [])
-    const config = {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${localStorage.getItem("authToken")}`
-        },
-    };
+   
 
     const sendMessage=()=>{
         console.log(text)
         socket.emit('newMessage', text);
+        const newMsg=[{text, user:username}]
+        console.log(username)
+        setMessages(messagesList=>[...messagesList, ...newMsg])
     }
   
     
@@ -49,12 +69,11 @@ function ChatRoom({roomId, user, setUser, preChat, setpreChat}) {
 
             </div>
             <div className="chat">
-                <div className="message">
-                  <p>text</p>
-                </div>
-                <div className="message">
-                  <p>text</p>
-                </div>
+                {messages.map((message, index)=>(
+                  <div key={index} className="message">
+                    <p>{message.text}</p>
+                  </div>
+                ))}
             </div>
 
             {preChat ? <div className="chat-input">

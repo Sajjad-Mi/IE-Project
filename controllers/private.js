@@ -21,7 +21,7 @@ module.exports.finduser_post = async (req , res) =>{
     }
 }
 //create a new chat and add the chat id to users record
-module.exports.newchat_post= async (req , res) =>{
+module.exports.newchat_post= async (req, res) =>{
     try {
         let newchat=false;
         const users=[];
@@ -40,5 +40,29 @@ module.exports.newchat_post= async (req , res) =>{
     } catch (err) {
         console.log(err.message)
        
+    }
+}
+
+module.exports.messages_get=async (req, res) =>{
+    try{
+        const chat = await Chat.findById(req.params.chatId);
+        if(chat.users.includes(req.user.username)){
+            res.status(201).json({ messages:chat.messages });
+        }else{
+            res.status(401);
+        }
+
+    }catch(err){
+        console.log(err);
+    }
+}
+module.exports.userinfo_get=async (req, res) =>{
+    try{
+     
+        res.status(201).json({ username: req.user.username });
+       
+
+    }catch(err){
+        console.log(err);
     }
 }
