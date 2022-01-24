@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const Chat = require("../models/Chat");
+const Group = require("../models/Group");
 
 module.exports.finduser_post = async (req , res) =>{
     try {
@@ -57,16 +58,42 @@ module.exports.newchat_post= async (req, res) =>{
 }
 
 module.exports.blockuser_post=async(req, res)=>{
-   
+   try{
     req.user.blockedUser.push(req.body.username);
     req.user.save();
+    res.status(201).json({ msg:"user blocked" });
 
+   }catch(err){
+       console.log(err.message)
+   }
 }
 module.exports.unblockuser_post=async(req, res)=>{
+    try{
+        req.user.blockedUser=  req.user.blockedUser.filter(user=>user != req.body.username);
+        req.user.save();
+        res.status(201).json({ msg:"user unblocked" });
 
-    req.user.blockedUser=  req.user.blockedUser.filter(user=>user != req.body.username);
-    req.user.save();
+    }catch(err){
+        console.log(err.message)
 
+    }
+
+}
+
+module.exports.creategroup_post=async(req, res)=>{
+    try{
+        
+        const group = await Group.create({groupname:req.body.groupname});
+        group.users.push(req.user.username);    
+        group.save();
+        req.user.chatsId.push({name:group.name, _id:group._id, chatType:"group"});
+        req.user.save();
+        res.status(201).json({ msg:"group created" });
+
+
+    }catch(err){
+        console.log(err);
+    }
 }
 
 module.exports.messages_get=async (req, res) =>{
