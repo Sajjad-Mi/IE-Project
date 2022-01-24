@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
       type: String,
       minlength: [6, 'Your password shoud be at least 6 char'],
     },
-    chatsId: [{name:String, _id:mongoose.ObjectId}]
+    chatsId: [{name:String, _id:mongoose.ObjectId, chatType:String}]
   });
 
   //hashing the password befor saving

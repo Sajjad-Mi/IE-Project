@@ -30,10 +30,10 @@ module.exports.newchat_post= async (req, res) =>{
         const chat = await  Chat.create({users});    
         
         const receiverUser = await User.findOne({username:req.body.username});
-        receiverUser.chatsId.push({name:req.user.username, _id:chat._id})
+        receiverUser.chatsId.push({name:req.user.username, _id:chat._id, chatType:"singleuser"})
         receiverUser.save();
 
-        req.user.chatsId.push({name:receiverUser.username, _id:chat._id});
+        req.user.chatsId.push({name:receiverUser.username, _id:chat._id, chatType:"singleuser"});
         req.user.save();
         newchat=true;
         res.status(201).json({ newchat });
@@ -57,11 +57,15 @@ module.exports.messages_get=async (req, res) =>{
     }
 }
 module.exports.userinfo_get=async (req, res) =>{
-    try{
-     
-        res.status(201).json({ username: req.user.username });
-       
-
+    try{ 
+        res.status(201).json({ username: req.user.username }); 
+    }catch(err){
+        console.log(err);
+    }
+}
+module.exports.chatlist_get=async (req, res)=>{
+    try{ 
+        res.status(201).json({ chatlist: req.user.chatsId }); 
     }catch(err){
         console.log(err);
     }

@@ -86,3 +86,13 @@ code {
   background-color: #1f1e1e;
   text-align: center;
 }
+
+
+.chat-name{
+  margin: 5px auto;
+  height: 45px;
+  width: 90%;
+  border-radius: 15px;
+  background-color: #1f1e1e;
+  text-align: center;
+}
