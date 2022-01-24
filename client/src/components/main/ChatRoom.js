@@ -7,7 +7,7 @@ const socket = io({
   }
 });
 
-function ChatRoom({blockUser, isBlocked, username, roomId, user, setUser, preChat, setpreChat}) {
+function ChatRoom({groupName, isGroup, blockUser, isBlocked, username, roomId, user, setUser, preChat, setpreChat}) {
     const [text, setText] = useState("");
     const [messages, setMessages] = useState([]);
     let messagesList;
@@ -90,11 +90,16 @@ function ChatRoom({blockUser, isBlocked, username, roomId, user, setUser, preCha
     return (
         <div className="chatroom">
             <div className="chat-header">
-                <h4>{user}</h4>
-                {blockUser ? <div className="block" onClick={()=>unblockuser()}>unblock</div> : <div>{preChat && <div className="block" onClick={()=>blockuser()}>Block</div>}
-                </div>}
+                {!isGroup ? 
+                  <div>
+                    <h4>{user}</h4>
+                    {blockUser ? <div className="block" onClick={()=>unblockuser()}>unblock</div> : <div>{preChat && <div className="block" onClick={()=>blockuser()}>Block</div>}
+                    </div>}
+                  </div>
+                  :<h4>{groupName}</h4>
+                }
             </div>
-            {isBlocked? <h4>You can't send message to this user</h4>:
+            {!isGroup && isBlocked? <h4>You can't send message to this user</h4>:
               <div>
                 <div className="chat">
                   {messages.map((message, index)=>(
@@ -104,10 +109,12 @@ function ChatRoom({blockUser, isBlocked, username, roomId, user, setUser, preCha
                   ))}
               </div>
               
-              {preChat ? <div className="chat-input">
-                  <input type="text" className="chat-text" value={text}  required onChange={(e) => setText(e.target.value)}/>
-                  <button onClick={sendMessage}>send</button>
-                </div >:<div className="chat-input">start a conversation <button onClick={startChat}>start</button></div>}
+              {!isGroup && !preChat ? 
+                <div className="chat-input">start a conversation <button onClick={startChat}>start</button></div>
+                : <div className="chat-input">
+                    <input type="text" className="chat-text" value={text}  required onChange={(e) => setText(e.target.value)}/>
+                    <button onClick={sendMessage}>send</button>
+                  </div>}
               </div>
             }
         </div>

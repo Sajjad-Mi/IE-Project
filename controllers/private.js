@@ -86,13 +86,24 @@ module.exports.creategroup_post=async(req, res)=>{
         const group = await Group.create({groupname:req.body.groupname});
         group.users.push(req.user.username);    
         group.save();
-        req.user.chatsId.push({name:group.name, _id:group._id, chatType:"group"});
+        req.user.chatsId.push({name:group.groupname, _id:group._id, chatType:"group"});
         req.user.save();
-        res.status(201).json({ msg:"group created" });
+        res.status(201).json({ chatlist: req.user.chatsId});
 
 
     }catch(err){
         console.log(err);
+    }
+}
+
+module.exports.findgroup_post=async(req, res)=>{
+    try{
+        const group = await Group.findById(req.body.groupid);
+
+        res.status(201).json({ chatlist: req.user.chatsId});
+
+    }catch(err){
+
     }
 }
 

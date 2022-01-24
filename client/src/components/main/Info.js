@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-function Info({setBlockUser, setIsBlocked, user, setRoomId, setUser, preChat, setpreChat, setShowChatPage}) {
+function Info({setGroupName ,setIsGroup, setBlockUser, setIsBlocked, user, setRoomId, setUser, preChat, setpreChat, setShowChatPage}) {
     const [username, setUsername] = useState("");
     const [chatList, setChatList] = useState([]);
+    const [newGroupName, setNewGroupName] = useState([]);
+
     const config = {
         headers: {
           "Content-Type": "application/json",
@@ -13,7 +15,6 @@ function Info({setBlockUser, setIsBlocked, user, setRoomId, setUser, preChat, se
     useEffect(async()=>{
         try {
             const { data } = await axios.get("/chatlist", config);
-            console.log(data.chatlist[0])
             setChatList(data.chatlist);
           } catch (error) {
            
@@ -30,6 +31,11 @@ function Info({setBlockUser, setIsBlocked, user, setRoomId, setUser, preChat, se
             );
             findUser(data);
             
+        }else if(chatList[index].chatType === "group"){
+           setGroupName(chatList[index].name);
+           setRoomId(chatList[index]._id);
+           setShowChatPage(true);
+           setIsGroup(true);
         }
     }
     const findUser = async (data)=>{
@@ -41,6 +47,7 @@ function Info({setBlockUser, setIsBlocked, user, setRoomId, setUser, preChat, se
                 setRoomId(data.chatid);
             }
             setShowChatPage(true);
+            setIsGroup(false);
             setIsBlocked(data.isBlocked);
             setBlockUser(data.blockUser);
           } catch (error) {
@@ -56,6 +63,16 @@ function Info({setBlockUser, setIsBlocked, user, setRoomId, setUser, preChat, se
         );
         findUser(data);
     }
+    const creategroupe = async (e) =>{
+        e.preventDefault();
+        const { data } = await axios.post("/creategroup",
+            {
+                groupname: newGroupName
+            }, config
+       
+        );
+        setChatList(data.chatlist);
+    }
     return (
         <div className="info">
             <div className="search-section">
@@ -67,6 +84,13 @@ function Info({setBlockUser, setIsBlocked, user, setRoomId, setUser, preChat, se
         
                 </form>
             
+            </div>
+            <div className="new-group">
+                <h4>New group</h4>
+                <form onSubmit={creategroupe} className="search-user">
+                    <input type="text"  value={newGroupName} placeholder="group name" required onChange={(e) => setNewGroupName(e.target.value)}/>
+                    <button type="submit" className="create-btn">create</button>
+                </form>
             </div>
             {chatList && <div className="chat-list">
                 {chatList.map((chat, index)=>(
