@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-function Info({user, setRoomId, setUser, preChat, setpreChat, setShowChatPage}) {
+function Info({setBlockUser, setIsBlocked, user, setRoomId, setUser, preChat, setpreChat, setShowChatPage}) {
     const [username, setUsername] = useState("");
     const [chatList, setChatList] = useState([]);
     const config = {
@@ -41,6 +41,8 @@ function Info({user, setRoomId, setUser, preChat, setpreChat, setShowChatPage}) 
                 setRoomId(data.chatid);
             }
             setShowChatPage(true);
+            setIsBlocked(data.isBlocked);
+            setBlockUser(data.blockUser);
           } catch (error) {
            
           }

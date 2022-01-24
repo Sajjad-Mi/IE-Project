@@ -7,6 +7,8 @@ module.exports.finduser_post = async (req , res) =>{
         console.log(user);
         let preChat=false;
         let chatid;
+        let isBlocked=false;
+        let blockUser=false;
         user.chatsId.forEach(chatId=>{
             if(chatId.name === req.user.username){
                 
@@ -14,7 +16,18 @@ module.exports.finduser_post = async (req , res) =>{
                 chatid=chatId._id;
             }
         })
-        res.status(201).json({ username: user.username,  preChat, chatid});
+        user.blockedUser.forEach(user=>{
+            if(user === req.user.username){
+                isBlocked=true;
+            }
+        })
+        req.user.blockedUser.forEach(user=>{
+            if(user === req.body.username){
+                blockUser=true;
+            }
+        })
+        console.log(isBlocked)
+        res.status(201).json({ username: user.username,  preChat, chatid, isBlocked, blockUser});
     } catch (err) {
         console.log(err)
        
@@ -41,6 +54,19 @@ module.exports.newchat_post= async (req, res) =>{
         console.log(err.message)
        
     }
+}
+
+module.exports.blockuser_post=async(req, res)=>{
+   
+    req.user.blockedUser.push(req.body.username);
+    req.user.save();
+
+}
+module.exports.unblockuser_post=async(req, res)=>{
+
+    req.user.blockedUser=  req.user.blockedUser.filter(user=>user != req.body.username);
+    req.user.save();
+
 }
 
 module.exports.messages_get=async (req, res) =>{

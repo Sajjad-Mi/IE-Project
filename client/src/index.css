@@ -96,3 +96,11 @@ code {
   background-color: #1f1e1e;
   text-align: center;
 }
+
+.block{
+  margin: 5px 5px;
+  height: 40px;
+  width: 40px;
+  border-radius: 35px;
+  background-color: #1f1e1e;
+}

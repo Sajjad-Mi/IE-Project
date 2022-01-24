@@ -10,6 +10,9 @@ function Main() {
   const [showChatPage, setShowChatPage] = useState(false);
   const [roomId, setRoomId] = useState();
   const [username, setUsername] = useState();
+  const [isBlocked, setIsBlocked] = useState();
+  const [blockUser, setBlockUser] = useState();
+
 
   useEffect(async()=>{
     try {
@@ -26,8 +29,8 @@ function Main() {
   }, [])
     return (
         <div className="Main">
-          <Info user={user} setRoomId={setRoomId}  setUser={setUser} preChat={preChat} setpreChat={setpreChat} setShowChatPage={setShowChatPage}/>
-          {showChatPage && <ChatRoom username={username} roomId={roomId} user={user} setUser={setUser } preChat={preChat} setpreChat={setpreChat}/>}
+          <Info setBlockUser={setBlockUser} setIsBlocked={setIsBlocked} user={user} setRoomId={setRoomId}  setUser={setUser} preChat={preChat} setpreChat={setpreChat} setShowChatPage={setShowChatPage}/>
+          {showChatPage && <ChatRoom blockUser={blockUser} isBlocked={isBlocked} username={username} roomId={roomId} user={user} setUser={setUser } preChat={preChat} setpreChat={setpreChat}/>}
         </div>
     );
   }
