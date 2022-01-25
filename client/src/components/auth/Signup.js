@@ -38,18 +38,21 @@ function Signup() {
           }
     }
     return (
-        <div className="Signup">
+        <div className="auth-form">
             <form onSubmit={signupHandler} className="Signup_form">
                 <h3>Signup</h3>
                 <label htmlFor="signup-name">Username:</label>
+                <br />
                 <input type="text" id="signup-name" required value={username} onChange={(e) => setUsername(e.target.value) }/>
-
+                <br />
                 <label htmlFor="signup-email">Email:</label>
+                <br />
                 <input type="email" id="signup-email" value={email}  required onChange={(e) => setEmail(e.target.value)}/>
-
+                <br />
                 <label htmlFor="signup-password">Password:</label>
+                <br />
                 <input type="password" id="signup-password" value={password}  required onChange={(e) => setPassword(e.target.value)}/>
-
+                <br />
                 <button type="submit" className="btn">Signup</button>
 
                

@@ -78,6 +78,7 @@ function Info({setMessages, setChangeChat, setGroupName ,setIsGroup, setBlockUse
     return (
         <div className="info">
             <div className="search-section">
+                <h4>Search user</h4>
                 <form onSubmit={searchHandler} className="search-user">
                 
                     <input type="text" id="search-username" value={username} placeholder="Search username" required onChange={(e) => setUsername(e.target.value)}/>

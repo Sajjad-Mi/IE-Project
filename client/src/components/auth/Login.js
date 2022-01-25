@@ -36,15 +36,18 @@ function Login() {
           }
     }
     return (
-        <div className="Login">
+        <div className="auth-form">
             <form onSubmit={loginHandler} className="Login_form">
                 <h3>Login</h3>
             
                 <label htmlFor="login-email">Email:</label>
+                <br />
                 <input type="email" id="login-email" value={email}  required onChange={(e) => setEmail(e.target.value)}/>
-
+                <br />
                 <label htmlFor="login-password">Password:</label>
+                <br />
                 <input type="password" id="login-password" value={password}  required onChange={(e) => setPassword(e.target.value)}/>
+                <br />
 
                 <button type="submit" className="btn">Login</button>
 
