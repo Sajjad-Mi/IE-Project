@@ -33,7 +33,7 @@ function Main() {
     return (
         <div className="Main">
           <Info setChangeChat={setChangeChat} setGroupName={setGroupName} setIsGroup={setIsGroup} setBlockUser={setBlockUser} setIsBlocked={setIsBlocked} user={user} setRoomId={setRoomId}  setUser={setUser} preChat={preChat} setpreChat={setpreChat} setShowChatPage={setShowChatPage}/>
-          {showChatPage && <ChatRoom setChangeChat={setChangeChat} changeChat={changeChat}showChatPage={showChatPage} groupName={groupName} isGroup={isGroup} blockUser={blockUser} isBlocked={isBlocked} username={username} roomId={roomId} user={user} setUser={setUser } preChat={preChat} setpreChat={setpreChat}/>}
+          {showChatPage && <ChatRoom setChangeChat={setChangeChat} changeChat={changeChat}setShowChatPage={setShowChatPage} groupName={groupName} isGroup={isGroup} blockUser={blockUser} isBlocked={isBlocked} username={username} roomId={roomId} user={user} setUser={setUser } preChat={preChat} setpreChat={setpreChat}/>}
         </div>
     );
   }

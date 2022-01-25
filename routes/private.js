@@ -11,6 +11,7 @@ router.post("/unblockuser", checkUser, privateControllers.unblockuser_post);
 router.post("/creategroup", checkUser, privateControllers.creategroup_post);
 router.post("/findgroup", checkUser, privateControllers.findgroup_post);
 router.post("/addUser", checkUser, privateControllers.addUser_post);
+router.post("/leavegroup", checkUser, privateControllers.leavegroup_post);
 router.get("/messages/:chatId", checkUser, privateControllers.messages_get);
 router.get("/group/messages/:chatId", checkUser, privateControllers.groupmessages_get);
 router.get("/userinfo", checkUser, privateControllers.userinfo_get);

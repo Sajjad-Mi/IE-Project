@@ -8,7 +8,7 @@ const socket = io({
   }
 });
 
-function ChatRoom({setChangeChat,changeChat, groupName, isGroup, blockUser, isBlocked, username, roomId, user, setUser, preChat, setpreChat}) {
+function ChatRoom({setChangeChat,changeChat, setShowChatPage, groupName, isGroup, blockUser, isBlocked, username, roomId, user, setUser, preChat, setpreChat}) {
     const [text, setText] = useState("");
     const [newGroupUser, setNewGroupUSer] = useState("");
     const [messages, setMessages] = useState([]);
@@ -115,6 +115,20 @@ function ChatRoom({setChangeChat,changeChat, groupName, isGroup, blockUser, isBl
        
       }
     }
+    const leaveGroup=async()=>{
+      try {
+        const { data } = await axios.post("/leavegroup",
+          {
+            groupid:roomId
+          }, config
+        );
+        if(data.msg==="you left the group"){
+          setShowChatPage(false);
+        }
+      } catch (error) {
+       
+      }
+    }
 
     return (
         <div className="chatroom">
@@ -128,6 +142,7 @@ function ChatRoom({setChangeChat,changeChat, groupName, isGroup, blockUser, isBl
                   :<div className="group-header">  
                       <input type="text" className="add-user" value={newGroupUser}  required onChange={(e) => setNewGroupUSer(e.target.value)}/>
                       <button onClick={addUser}>Add</button>
+                      <button className="leave-btn" onClick={leaveGroup}>Leave</button>
                       <h4>{groupName}</h4>
                   </div>
                 }

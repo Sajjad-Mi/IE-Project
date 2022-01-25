@@ -122,6 +122,18 @@ module.exports.addUser_post=async(req, res)=>{
         res.status(401);
     }
 }
+module.exports.leavegroup_post=async(req, res)=>{
+    try{
+        const group = await Group.findById(req.body.groupid);
+        group.users = group.users.filter(user=>user!=req.user.username);
+        req.user.chatsId =  req.user.chatsId.filter(chat=>chat._id != req.body.groupid);
+        group.save();
+        req.user.save();
+        res.status(201).json({msg:"you left the group"});
+    }catch(err){
+
+    }
+}
 module.exports.messages_get=async (req, res) =>{
     try{
         const chat = await Chat.findById(req.params.chatId);
