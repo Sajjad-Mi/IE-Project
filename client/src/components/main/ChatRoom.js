@@ -56,7 +56,7 @@ function ChatRoom({setMessages, messages, setChangeChat,changeChat, setShowChatP
    
 
     const sendMessage=()=>{
-        console.log(text)
+        console.log("send")
         socket.emit('newMessage', text, isGroup);
         const newMsg=[{text, user:username}]
         console.log(username)
@@ -138,11 +138,17 @@ function ChatRoom({setMessages, messages, setChangeChat,changeChat, setShowChatP
                     {blockUser ? <div className="block" onClick={()=>unblockuser()}>unblock</div> : <div>{preChat && <div className="block" onClick={()=>blockuser()}>Block</div>}
                     </div>}
                   </div>
-                  :<div className="group-header">  
-                      <input type="text" className="add-user" value={newGroupUser}  required onChange={(e) => setNewGroupUSer(e.target.value)}/>
-                      <button onClick={addUser}>Add</button>
-                      <button className="leave-btn" onClick={leaveGroup}>Leave</button>
-                      <h4>{groupName}</h4>
+                  :<div className="group-header"> 
+                      <div className="group-info"> 
+                        <h4>{groupName}</h4>
+                      </div>
+                      <div className="group-feature">
+                        <label htmlFor="new-user-group">Add new user to group</label>
+                        <input type="text" className="add-user" id="new-user-group" value={newGroupUser} placeholder="Write username" required onChange={(e) => setNewGroupUSer(e.target.value)}/>
+                        <button className="add-user-btn" onClick={addUser}>Add</button>
+                        <button className="leave-btn" onClick={leaveGroup}>Leave</button>
+                      </div>
+                    
                   </div>
                 }
             </div>
@@ -150,9 +156,13 @@ function ChatRoom({setMessages, messages, setChangeChat,changeChat, setShowChatP
               <div>
                 <div className="chat">
                   {messages.map((message, index)=>(
-                    <div key={index} className="message">
-                      {message.text.includes("http") ? <a target="_blank" href={message.text}>{message.text}</a>
-                      :<p>{message.text}</p>}
+                    <div className="msg-container">
+                      <h5 className="title-username">{message.user}</h5>
+                      <div key={index} className="message">
+                        {message.text.includes("http") ? <a target="_blank" href={message.text}>{message.text}</a>
+                        :<p>{message.text}</p>}
+                        
+                      </div>
                     </div>
                   ))}
               </div>

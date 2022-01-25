@@ -18,7 +18,22 @@ code {
   max-width: 1200px;
   margin: 30px auto;
 }
-
+input{
+  border-radius: 5px;
+  background-color: #f1f1f1;
+}
+button{
+  border: none;
+  border-radius: 5px;
+  background-color: #fcde67;
+}
+input:focus{
+  outline: none;
+}
+a{
+  text-decoration: none;
+  color: white;
+}
 .info{
   padding: 5px;
   width: 28%;
@@ -53,6 +68,34 @@ code {
   position: relative;
   background-color: #272626;
 }
+.group-info{
+  padding: 10px;
+  width: 38%;
+  display: inline-block;
+}
+.group-feature{
+  float: right;
+  width: 58%;
+  
+}
+.group-feature label{
+  font-size: 12px;
+  
+}
+
+.group-feature input{
+  display:inline-block;
+  margin: 8px 8px;
+  width: 40%;
+  padding: 8px;
+}
+.group-feature .add-user-btn{
+  padding: 8px;
+}
+.leave-btn{
+  margin: 6px 8px;
+  padding: 5px;
+}
 .chat-header{
   margin: 10px auto;
   width: 95%;
@@ -68,25 +111,44 @@ code {
   background-color: #2e2e2e;
 }
 .chat-input{
-  position: absolute;  
-  left: 0;
-  right: 0;
-  bottom: 10px;
   margin: 10px auto;
   width: 95%;
   height: 80px;
   border-radius: 5px;
   background-color: #2e2e2e;
 }
+.chat-input input{
+  display:inline-block;
+  margin: 20px 20px;
+  width: 40%;
+  padding: 10px;
+}
+.chat-input button{
+  padding: 10px;
+}
+.chat, .info{
+  overflow:auto;
+}
 .chat .message{
+  display: inline-block;
   margin: 5px 5px;
-  height: 25px;
-  width: 80px;
+  max-width: 480px;
   border-radius: 25px;
   background-color: #1f1e1e;
   text-align: center;
+  padding: 2px 18px;
 }
-
+.chat .message p{
+  text-align:center; 
+  vertical-align: middle;
+}
+.title-username{
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 30px;
+  color: #1f1e1e;
+  background-color: #fcde67;
+}
 
 .chat-name{
   margin: 5px auto;
@@ -103,4 +165,17 @@ code {
   width: 40px;
   border-radius: 35px;
   background-color: #1f1e1e;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #272626; 
+
 }
