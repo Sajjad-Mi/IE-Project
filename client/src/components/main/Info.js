@@ -99,6 +99,7 @@ function Info({setMessages, setChangeChat, setGroupName ,setIsGroup, setBlockUse
                 {chatList.map((chat, index)=>(
                   <div key={chat._id} className="chat-name" onClick={()=>findChat(index)}>
                     <h5>{chat.name}</h5>
+                    {chatList[index].chatType === "group" && <h6>Group</h6>}
                   </div>
                 ))}
             </div>}

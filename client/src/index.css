@@ -75,8 +75,7 @@ a{
   border-radius: 4px;
 }
 .search-user button{
-  width: 18%;
-  padding: 15px 15px;
+  padding: 10px 10px;
   margin-left: 10px;
 }
 .chatroom{
@@ -170,12 +169,18 @@ a{
 }
 
 .chat-name{
-  margin: 5px auto;
-  height: 45px;
+  margin: 10px auto;
+  padding: 2px;
   width: 90%;
   border-radius: 15px;
-  background-color: #1f1e1e;
+  background-color: #2b2a2a;
   text-align: center;
+  box-shadow: 0 6px 8px 0 #00000033, 0 6px 10px 0 #1d1c1c30;
+}
+
+.chat-name h5, .chat-name h6{
+  padding: 2px;
+  display: inline-block;
 }
 
 .block{
