@@ -42,6 +42,7 @@ io.on('connection', socket => {
     socket.on('newMessage',async (chattext, isGroup)=>{
       const newMessage = {text:chattext, user: socket.data.username};
       let chat;
+      console.log(isGroup+" "+roomId)
       if(isGroup){
         chat = await Group.findById(roomId);
       }else{
@@ -49,7 +50,7 @@ io.on('connection', socket => {
       }
       chat.messages.push(newMessage);
       chat.save();
-      socket.broadcast.to(roomId).emit('message', chattext)
+      socket.broadcast.to(roomId).emit('message', newMessage)
     })
   })
 })

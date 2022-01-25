@@ -49,7 +49,7 @@ function ChatRoom({setMessages, messages, setChangeChat,changeChat, setShowChatP
       socket.emit('joinRoom', {roomId});
         socket.on('message', (data)=>{
           console.log(data)
-          const newMsg=[{text:data, user:username}]
+          const newMsg=[data]
           setMessages(messagesList=>[...messagesList, ...newMsg])
         })
     }, [])
@@ -133,9 +133,9 @@ function ChatRoom({setMessages, messages, setChangeChat,changeChat, setShowChatP
         <div className="chatroom">
             <div className="chat-header">
                 {!isGroup ? 
-                  <div>
+                  <div className="group-info">
                     <h4>{user}</h4>
-                    {blockUser ? <div className="block" onClick={()=>unblockuser()}>unblock</div> : <div>{preChat && <div className="block" onClick={()=>blockuser()}>Block</div>}
+                    {blockUser ? <div className="block" onClick={()=>unblockuser()}>unblock</div> : <div className="block">{preChat && <div className="block" onClick={()=>blockuser()}>Block</div>}
                     </div>}
                   </div>
                   :<div className="group-header"> 
@@ -156,13 +156,13 @@ function ChatRoom({setMessages, messages, setChangeChat,changeChat, setShowChatP
               <div>
                 <div className="chat">
                   {messages.map((message, index)=>(
-                    <div className="msg-container">
-                      <h5 className="title-username">{message.user}</h5>
-                      <div key={index} className="message">
-                        {message.text.includes("http") ? <a target="_blank" href={message.text}>{message.text}</a>
-                        :<p>{message.text}</p>}
+                    <div key={index} className="msg-container">    
+                        <div  className="message">
+                          <h5 className="title-username">{message.user}</h5>
+                          {message.text.includes("http") ? <a target="_blank" href={message.text}>{message.text}</a>
+                          :<p>{message.text}</p>}
                         
-                      </div>
+                        </div>
                     </div>
                   ))}
               </div>
