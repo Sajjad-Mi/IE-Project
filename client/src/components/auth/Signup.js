@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function Signup() {
     const [username, setUsername] = useState("");
@@ -54,9 +54,9 @@ function Signup() {
                 <input type="password" id="signup-password" value={password}  required onChange={(e) => setPassword(e.target.value)}/>
                 <br />
                 <button type="submit" className="btn">Signup</button>
-
                
             </form>
+            <Link className="redirct-link" to={"/login"}>Already signup</Link>
         </div>
     );
   }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -50,9 +50,9 @@ function Login() {
                 <br />
 
                 <button type="submit" className="btn">Login</button>
-
                
             </form>
+            <Link className="redirct-link" to={"/signup"}>If you didn't signup</Link>
         </div>
     );
   }
