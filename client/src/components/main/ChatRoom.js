@@ -47,11 +47,11 @@ function ChatRoom({setMessages, messages, setChangeChat,changeChat, setShowChatP
     useEffect(async()=>{
      
       socket.emit('joinRoom', {roomId});
-        socket.on('message', (data)=>{
+      socket.on('message', (data)=>{
           console.log(data)
           const newMsg=[data]
           setMessages(messagesList=>[...messagesList, ...newMsg])
-        })
+      })
     }, [])
    
 
@@ -109,7 +109,8 @@ function ChatRoom({setMessages, messages, setChangeChat,changeChat, setShowChatP
             groupid:roomId
           }, config
         );
-        
+        socket.emit('joingroup', newGroupUser, roomId);
+
       } catch (error) {
        
       }
@@ -123,6 +124,7 @@ function ChatRoom({setMessages, messages, setChangeChat,changeChat, setShowChatP
         );
         if(data.msg==="you left the group"){
           setShowChatPage(false);
+          socket.emit('leftgroup', roomId);
         }
       } catch (error) {
        

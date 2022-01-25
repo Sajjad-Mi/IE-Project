@@ -53,6 +53,20 @@ io.on('connection', socket => {
       socket.broadcast.to(roomId).emit('message', newMessage)
     })
   })
+  socket.on('leftgroup', async (roomId)=>{
+    const chat = await Group.findById(roomId);
+    const newMessage = {text:`${socket.data.username} left the group`, user: "App"};
+    chat.messages.push(newMessage);
+    chat.save();
+    socket.broadcast.to(roomId).emit('message', newMessage)
+  })
+  socket.on('joingroup', async (newGroupUser, roomId)=>{
+    const chat = await Group.findById(roomId);
+    const newMessage = {text:`${newGroupUser} joind the group`, user: "App"};
+    chat.messages.push(newMessage);
+    chat.save();
+    io.to(roomId).emit('message', newMessage)
+  })
 })
 
 mongoose.connect(process.env.DB_URL, { useNewUrlParser: true,  useUnifiedTopology: true})
