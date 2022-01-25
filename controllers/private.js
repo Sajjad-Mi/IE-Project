@@ -84,7 +84,8 @@ module.exports.creategroup_post=async(req, res)=>{
     try{
         
         const group = await Group.create({groupname:req.body.groupname});
-        group.users.push(req.user.username);    
+        group.users.push(req.user.username); 
+        group.messages.push({text: `http://localhost:3000/join/${group._id}`, user: "App"})   
         group.save();
         req.user.chatsId.push({name:group.groupname, _id:group._id, chatType:"group"});
         req.user.save();
@@ -106,12 +107,39 @@ module.exports.findgroup_post=async(req, res)=>{
 
     }
 }
-
+module.exports.addUser_post=async(req, res)=>{
+    try{
+        const group = await Group.findById(req.body.groupid);
+        const user = await User.findOne({username:req.body.newuser});
+        if(!group.users.includes(user.username)){
+            group.users.push(user.username);
+            user.chatsId.push({name:group.groupname, _id:group._id, chatType:"group"});
+            group.save();
+            user.save();
+        }
+        res.status(201).json({ msg:"user added"});
+    }catch(err){
+        res.status(401);
+    }
+}
 module.exports.messages_get=async (req, res) =>{
     try{
         const chat = await Chat.findById(req.params.chatId);
         if(chat.users.includes(req.user.username)){
             res.status(201).json({ messages:chat.messages });
+        }else{
+            res.status(401);
+        }
+
+    }catch(err){
+        console.log(err);
+    }
+}
+module.exports.groupmessages_get=async (req, res)=>{
+    try{
+        const group = await Group.findById(req.params.chatId);
+        if(group.users.includes(req.user.username)){
+            res.status(201).json({ messages:group.messages });
         }else{
             res.status(401);
         }
@@ -130,6 +158,20 @@ module.exports.userinfo_get=async (req, res) =>{
 module.exports.chatlist_get=async (req, res)=>{
     try{ 
         res.status(201).json({ chatlist: req.user.chatsId }); 
+    }catch(err){
+        console.log(err);
+    }
+}
+
+module.exports.joingroup_get=async (req, res)=>{
+    try{
+        const group = await Group.findById(req.params.groupid);
+        group.users.push(req.user.username);
+        group.save();
+        req.user.chatsId.push({name:group.groupname, _id:group._id, chatType:"group"});
+        res.status(201).json({ msg:"you joind the group" }); 
+        console.log("get")
+
     }catch(err){
         console.log(err);
     }

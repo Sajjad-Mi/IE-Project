@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import io from "socket.io-client";
+import { Link } from "react-router-dom";
 const socket = io({
   auth: {
     token: localStorage.getItem("authToken")
   }
 });
 
-function ChatRoom({groupName, isGroup, blockUser, isBlocked, username, roomId, user, setUser, preChat, setpreChat}) {
+function ChatRoom({setChangeChat,changeChat, groupName, isGroup, blockUser, isBlocked, username, roomId, user, setUser, preChat, setpreChat}) {
     const [text, setText] = useState("");
+    const [newGroupUser, setNewGroupUSer] = useState("");
     const [messages, setMessages] = useState([]);
     let messagesList;
     const config = {
@@ -18,9 +20,9 @@ function ChatRoom({groupName, isGroup, blockUser, isBlocked, username, roomId, u
       },
   };
     useEffect(async()=>{
-      console.log("hi"+preChat)
-
-      if(preChat){
+      console.log("preChat")
+      setChangeChat(false)
+      if(!isGroup && preChat){
         try {
           const { data } = await axios.get(`/messages/${roomId}`, config
           );
@@ -30,8 +32,22 @@ function ChatRoom({groupName, isGroup, blockUser, isBlocked, username, roomId, u
         } catch (error) {
           console.log(error)
         }
+      }else if(isGroup){
+        try {
+          const { data } = await axios.get(`/group/messages/${roomId}`, config
+          );
+          console.log(data)
+          messagesList=data.messages;
+          setMessages(messagesList);
+        } catch (error) {
+          console.log(error)
+        }
       }
-        socket.emit('joinRoom', {roomId});
+        
+    }, [changeChat])
+    useEffect(async()=>{
+     
+      socket.emit('joinRoom', {roomId});
         socket.on('message', (data)=>{
           console.log(data)
           const newMsg=[{text:data, user:username}]
@@ -86,6 +102,19 @@ function ChatRoom({groupName, isGroup, blockUser, isBlocked, username, roomId, u
        
       }
     }
+    const addUser=async()=>{
+      try {
+        const { data } = await axios.post("/addUser",
+          {
+            newuser:newGroupUser,
+            groupid:roomId
+          }, config
+        );
+        
+      } catch (error) {
+       
+      }
+    }
 
     return (
         <div className="chatroom">
@@ -96,7 +125,11 @@ function ChatRoom({groupName, isGroup, blockUser, isBlocked, username, roomId, u
                     {blockUser ? <div className="block" onClick={()=>unblockuser()}>unblock</div> : <div>{preChat && <div className="block" onClick={()=>blockuser()}>Block</div>}
                     </div>}
                   </div>
-                  :<h4>{groupName}</h4>
+                  :<div className="group-header">  
+                      <input type="text" className="add-user" value={newGroupUser}  required onChange={(e) => setNewGroupUSer(e.target.value)}/>
+                      <button onClick={addUser}>Add</button>
+                      <h4>{groupName}</h4>
+                  </div>
                 }
             </div>
             {!isGroup && isBlocked? <h4>You can't send message to this user</h4>:
@@ -104,7 +137,8 @@ function ChatRoom({groupName, isGroup, blockUser, isBlocked, username, roomId, u
                 <div className="chat">
                   {messages.map((message, index)=>(
                     <div key={index} className="message">
-                      <p>{message.text}</p>
+                      {message.text.includes("http") ? <a target="_blank" href={message.text}>{message.text}</a>
+                      :<p>{message.text}</p>}
                     </div>
                   ))}
               </div>
@@ -120,5 +154,6 @@ function ChatRoom({groupName, isGroup, blockUser, isBlocked, username, roomId, u
         </div>
     );
   }
-    
+  
+
   export default ChatRoom;

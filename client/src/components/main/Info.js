@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-function Info({setGroupName ,setIsGroup, setBlockUser, setIsBlocked, user, setRoomId, setUser, preChat, setpreChat, setShowChatPage}) {
+function Info({setChangeChat, setGroupName ,setIsGroup, setBlockUser, setIsBlocked, user, setRoomId, setUser, preChat, setpreChat, setShowChatPage}) {
     const [username, setUsername] = useState("");
     const [chatList, setChatList] = useState([]);
     const [newGroupName, setNewGroupName] = useState([]);
@@ -21,7 +21,8 @@ function Info({setGroupName ,setIsGroup, setBlockUser, setIsBlocked, user, setRo
           }
     }, [])
     const findChat = async (index) =>{
-       
+        setChangeChat(true)
+       console.log(index);
         if(chatList[index].chatType === "singleuser"){
           
             const { data } = await axios.post("/finduser",
