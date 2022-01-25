@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-function Info({setChangeChat, setGroupName ,setIsGroup, setBlockUser, setIsBlocked, user, setRoomId, setUser, preChat, setpreChat, setShowChatPage}) {
+function Info({setMessages, setChangeChat, setGroupName ,setIsGroup, setBlockUser, setIsBlocked, user, setRoomId, setUser, preChat, setpreChat, setShowChatPage}) {
     const [username, setUsername] = useState("");
     const [chatList, setChatList] = useState([]);
     const [newGroupName, setNewGroupName] = useState([]);
@@ -22,6 +22,7 @@ function Info({setChangeChat, setGroupName ,setIsGroup, setBlockUser, setIsBlock
     }, [])
     const findChat = async (index) =>{
         setChangeChat(true)
+        setMessages([]);
        console.log(index);
         if(chatList[index].chatType === "singleuser"){
           

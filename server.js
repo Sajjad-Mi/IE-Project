@@ -7,6 +7,7 @@ const io = require('socket.io')(server);
 const authRoutes  = require('./routes/auth');
 const privateRoutes = require('./routes/private');
 const Chat = require("./models/Chat");
+const Group = require("./models/Group");
 const User = require("./models/User");
 const jwt = require("jsonwebtoken");
 
@@ -38,12 +39,17 @@ io.on('connection', socket => {
   socket.on('joinRoom', ({roomId})=>{
     socket.join(roomId);
  
-    socket.on('newMessage',async (data)=>{
-      const newMessage = {text:data, user: socket.data.username};
-      const message = await Chat.findById(roomId);
-      message.messages.push(newMessage);
-      message.save();
-      socket.broadcast.to(roomId).emit('message', data)
+    socket.on('newMessage',async (chattext, isGroup)=>{
+      const newMessage = {text:chattext, user: socket.data.username};
+      let chat;
+      if(isGroup){
+        chat = await Group.findById(roomId);
+      }else{
+        chat = await Chat.findById(roomId);
+      }
+      chat.messages.push(newMessage);
+      chat.save();
+      socket.broadcast.to(roomId).emit('message', chattext)
     })
   })
 })

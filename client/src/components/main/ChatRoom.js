@@ -8,10 +8,9 @@ const socket = io({
   }
 });
 
-function ChatRoom({setChangeChat,changeChat, setShowChatPage, groupName, isGroup, blockUser, isBlocked, username, roomId, user, setUser, preChat, setpreChat}) {
+function ChatRoom({setMessages, messages, setChangeChat,changeChat, setShowChatPage, groupName, isGroup, blockUser, isBlocked, username, roomId, user, setUser, preChat, setpreChat}) {
     const [text, setText] = useState("");
     const [newGroupUser, setNewGroupUSer] = useState("");
-    const [messages, setMessages] = useState([]);
     let messagesList;
     const config = {
       headers: {
@@ -58,7 +57,7 @@ function ChatRoom({setChangeChat,changeChat, setShowChatPage, groupName, isGroup
 
     const sendMessage=()=>{
         console.log(text)
-        socket.emit('newMessage', text);
+        socket.emit('newMessage', text, isGroup);
         const newMsg=[{text, user:username}]
         console.log(username)
         setMessages(messagesList=>[...messagesList, ...newMsg])

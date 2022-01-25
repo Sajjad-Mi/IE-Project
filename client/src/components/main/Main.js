@@ -15,6 +15,7 @@ function Main() {
   const [isGroup, setIsGroup] = useState();
   const [groupName, setGroupName] = useState();
   const [changeChat, setChangeChat] = useState();
+  const [messages, setMessages] = useState([]);
 
 
   useEffect(async()=>{
@@ -32,8 +33,8 @@ function Main() {
   }, [])
     return (
         <div className="Main">
-          <Info setChangeChat={setChangeChat} setGroupName={setGroupName} setIsGroup={setIsGroup} setBlockUser={setBlockUser} setIsBlocked={setIsBlocked} user={user} setRoomId={setRoomId}  setUser={setUser} preChat={preChat} setpreChat={setpreChat} setShowChatPage={setShowChatPage}/>
-          {showChatPage && <ChatRoom setChangeChat={setChangeChat} changeChat={changeChat}setShowChatPage={setShowChatPage} groupName={groupName} isGroup={isGroup} blockUser={blockUser} isBlocked={isBlocked} username={username} roomId={roomId} user={user} setUser={setUser } preChat={preChat} setpreChat={setpreChat}/>}
+          <Info setMessages={setMessages} setChangeChat={setChangeChat} setGroupName={setGroupName} setIsGroup={setIsGroup} setBlockUser={setBlockUser} setIsBlocked={setIsBlocked} user={user} setRoomId={setRoomId}  setUser={setUser} preChat={preChat} setpreChat={setpreChat} setShowChatPage={setShowChatPage}/>
+          {showChatPage && <ChatRoom setMessages={setMessages} messages={messages} setChangeChat={setChangeChat} changeChat={changeChat}setShowChatPage={setShowChatPage} groupName={groupName} isGroup={isGroup} blockUser={blockUser} isBlocked={isBlocked} username={username} roomId={roomId} user={user} setUser={setUser } preChat={preChat} setpreChat={setpreChat}/>}
         </div>
     );
   }
